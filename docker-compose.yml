@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  api-gateway:
+    image: dicy/api-gateway:latest
+    ports:
+      - "3001:3000" # Map host port 3001 to container port 3000
+    depends_on:
+      - task-service
+      - user-service
+    networks:
+      - to_do_list_net
+
+  task-service:
+    image: dicy/task-service:latest
+    networks:
+      - to_do_list_net
+
+  user-service:
+    image: dicy/user-service:latest
+    networks:
+      - to_do_list_net
+
+networks:
+  to_do_list_net:
+    driver: bridge
